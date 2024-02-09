@@ -1,0 +1,118 @@
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <ctime>
+#include <iomanip>
+using namespace std;
+
+
+struct Student {
+    string lastName;
+    string firstName;
+    int numQuizzes;
+    int quizScores[10];
+    double quizAverage;
+};
+
+void StudentData(Student& student) {
+    student.numQuizzes = rand() % 11; 
+    for (int i = 0; i < student.numQuizzes; ++i) {
+        student.quizScores[i] = rand() % 21;
+    }
+}
+
+double calculateAverage(const Student& student) {
+    if (student.numQuizzes == 0) {
+        return 0.0; 
+    }
+    double sum = 0.0;
+    for (int i = 0; i < student.numQuizzes; ++i) {
+        sum += student.quizScores[i];
+    }
+    return sum / student.numQuizzes;
+}
+
+void StudentDataInputFile(ofstream& inputFile, const Student& student) {
+    inputFile << student.lastName << " " << student.firstName << " " << student.numQuizzes << " ";
+    for (int i = 0; i < student.numQuizzes; ++i) {
+        inputFile << student.quizScores[i] << " ";
+    }
+    inputFile << endl;
+}
+
+void StudentAveragesOutputFile(ofstream& outputFile, const Student& student) {
+    outputFile << "Student Name: " << student.firstName << " " << student.lastName << endl;
+    outputFile << "Number of quizzes taken: " << student.numQuizzes << endl;
+    outputFile << "Quiz Scores: ";
+    for (int i = 0; i < student.numQuizzes; ++i) {
+        outputFile << "Quiz " << i + 1 << ": " << student.quizScores[i] << " ";
+    }
+    outputFile << endl;
+    outputFile << "Average Score: " << fixed << setprecision(1) << student.quizAverage << endl;
+    outputFile << endl;
+}
+
+int main() {
+    srand(time(nullptr));
+
+    int numStudents = 5;
+    ofstream inputFile("student_data.txt");
+    ofstream outputFile("student_averages.txt");
+
+    if (!inputFile || !outputFile) {
+        cerr << "Error opening input or output file!" << endl;
+        return 1;
+    }
+
+    outputFile << "This file displays the student grades along with the average score for each student." << endl << endl;
+
+
+    string firstNames[] = {"Carlos", "Julia", "Kevin", "Steve", "Clara"};
+    string lastNames[] = {"Tobias", "Tobias", "Tobias", "Tobias", "Tobias"};
+
+    for (int i = 0; i < numStudents; ++i) {
+        Student student;
+        student.lastName = lastNames[i];
+        student.firstName = firstNames[i];
+        StudentData(student);
+        StudentDataInputFile(inputFile, student);
+    }
+
+
+    inputFile.close();
+    ifstream inputFileRead("student_data.txt");
+    if (!inputFileRead) {
+        cerr << "Error opening the input file for reading!" << endl;
+        return 1;
+    }
+
+    string line;
+    while (inputFileRead >> line) {
+        Student student;
+        student.lastName = line;
+        inputFileRead >> student.firstName >> student.numQuizzes;
+        for (int i = 0; i < student.numQuizzes; ++i) {
+            inputFileRead >> student.quizScores[i];
+        }
+        student.quizAverage = calculateAverage(student);
+        StudentAveragesOutputFile(outputFile, student);
+    }
+
+    inputFileRead.close();
+    outputFile.close();
+
+    ifstream outputFileRead("student_averages.txt");
+    if (!outputFileRead) {
+        cerr << "Error opening the output file for reading!" << endl;
+        return 1;
+    }
+
+    string outputLine;
+    while (getline(outputFileRead, outputLine)) {
+        cout << outputLine << endl;
+    }
+
+    outputFileRead.close();
+
+    return 0;
+}
