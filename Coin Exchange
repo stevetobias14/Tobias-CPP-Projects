@@ -1,0 +1,63 @@
+#include <iostream>
+using namespace std;
+int main() 
+// Steve Tobias    COP 3014    Assignment1 Part 2    Fall 2023
+{
+    const int QUARTER = 25;
+    const int DIME = 10;
+    const int NICKLE = 5;
+    const int PENNY = 1;
+    double userquarter;
+    double userdime;
+    double usernickle;
+    double userpenny;
+    double coins = 100;
+    double q_total;
+    double d_total;
+    double n_total;
+    double p_total;
+    double grand_total;
+
+    cout << "Welcome to the US Currency coin exchange! Please insert your coins as requested below. The machine can only take in up to 100 coins per coin currency. \n";
+    cout << endl;
+    cout << "Please enter your quarters in now:\n";
+    cin >>userquarter;
+        // Here we have if the machine recieves anything below 0, it will shut down and you will have to restart. This works for the input from the user for quarters, dimes, nickles, and pennys.
+    while (userquarter < 0)
+        {
+            cout << "Sorry, you entered an invalid amount. The program will now shut down.";
+            exit(0);
+        }
+    cout << endl;
+    cout << "Please enter your dimes in now:\n";
+    cin >> userdime;
+    while (userdime < 0)
+        {
+            cout << "Sorry, you entered an invalid amount. The program will now shut down.";
+            exit(0);
+        }
+    cout << endl;
+    cout << "Please enter your nickles in now:\n";
+    cin >> usernickle;
+    while (usernickle < 0)
+        {
+            cout << "Sorry, you entered an invalid amount. The program will now shut down.";
+            exit (0);
+        }
+    cout << endl;
+    cout << "Please enter your pennys in now:\n";
+    cin >> userpenny;
+    while (userpenny < 0)
+        {
+            cout << "Sorry, you entered an invalid amount. The program will now shut down.";
+            exit (0);
+        }
+        // Here is the caluclation being done to add all the coins up together and produce how much money was taken in by the user displayed in US currency.
+    q_total = (userquarter * QUARTER) / coins;
+    d_total = (userdime * DIME) / coins;
+    n_total = (usernickle * NICKLE) / coins;
+    p_total = (userpenny * PENNY) / coins;
+    grand_total = (q_total + d_total + n_total + p_total);
+    cout << endl;
+    cout << "Thank you. Your total is: $" << grand_total;
+}
