@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 int main() 
-// Steve Tobias    COP 3014    Assignment1 Part 2    Fall 2023
+// Steve Tobias    COP 3014     Fall 2023
 {
     const int QUARTER = 25;
     const int DIME = 10;
