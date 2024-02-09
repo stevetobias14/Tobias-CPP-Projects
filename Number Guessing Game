@@ -1,0 +1,77 @@
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+int main() {
+    const int MINVALUE = 100;
+    const int MAXVALUE = 999;
+    int tries;
+    int guess = 0;
+    char answer;
+    srand (time(NULL));
+    int random_number = ( rand () % (MAXVALUE - MINVALUE +1)) + MINVALUE;
+    tries = 10;
+
+    
+    cout << "********************************************************************\n";
+    cout << "*            Guess a number between 100 and 999!                   *\n";
+    cout << "********************************************************************\n";
+    cout << endl;
+    cout << endl;
+    cout << "You have 10 tries\n";
+    cout << "Please enter your guess: ";
+    cin >> guess;
+    
+    while (guess > MAXVALUE or guess < MINVALUE)  
+    {
+        cout << "Your guess must be between 100 and 999.\n";
+        cout << "Please re-enter: ";
+        cin >> guess; 
+    }
+    
+
+    while (guess < random_number)
+    {
+        cout << "Please guess higher.";
+        --tries;
+        cout << endl;
+        cout << endl;
+        cout << "You have " << tries << " tries\n";
+        cout << "Please enter your guess: ";
+        cin >> guess;
+        
+    }
+    
+    while (guess > random_number)
+    {
+        cout << "Please guess lower.";
+        --tries;
+        cout << endl;
+        cout << endl;
+        cout << "You have " << tries << " tries\n";
+        cout << "Please enter your guess: ";
+        cin >> guess;
+    }
+
+    do {
+        cout << "Congratulations! You guessed correctly!\n";
+        cout << endl;
+        cout << "Would you like to play again (type y for yes and n for no): ";
+        cin >> answer;
+        break;
+    }
+    while (guess = random_number);
+
+    while (answer != 'y' or answer != 'n')
+{
+    cout << "Please type y for yes and n for no: ";
+    cin >> answer;
+
+}
+    if (tries = 0) 
+    {
+    cout << "Sorry you ran out of tries.\n";
+    cout << "Would you like to play again (type y for yes and n for no): ";
+    }
+}
+    
